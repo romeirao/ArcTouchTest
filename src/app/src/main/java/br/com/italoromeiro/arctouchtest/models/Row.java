@@ -33,6 +33,12 @@ public class Row implements Serializable {
     @SerializedName("route_id")
     private Integer mRouteId;
 
+    @SerializedName("calendar")
+    private String mCalendar;
+
+    @SerializedName("time")
+    private String mTime;
+
     public Integer getId() {
         return mId;
     }
@@ -97,8 +103,88 @@ public class Row implements Serializable {
         this.mRouteId = routeId;
     }
 
+    public String getCalendar() {
+        return mCalendar;
+    }
+
+    public void setCalendar(String calendar) {
+        this.mCalendar = calendar;
+    }
+
+    public String getTime() {
+        return mTime;
+    }
+
+    public void setTime(String time) {
+        this.mTime = time;
+    }
+
+    public Route getRoute() {
+        if (!verifyExistence(mId, mShortName, mLongName, mLastModifiedDate, mAgencyId)) {
+            return null;
+        }
+
+        Route route = new Route();
+        route.setId(mId);
+        route.setShortName(mShortName);
+        route.setLongName(mLongName);
+        route.setLastModifiedDate(mLastModifiedDate);
+        route.setAgencyId(mAgencyId);
+        return route;
+    }
+
+    public Stop getStop() {
+        if (!verifyExistence(mId, mName, mSequence, mRouteId)) {
+            return null;
+        }
+
+        Stop stop = new Stop();
+        stop.setId(mId);
+        stop.setName(mName);
+        stop.setSequence(mSequence);
+        stop.setRouteId(mRouteId);
+        return stop;
+    }
+
+    public Departure getDeparture() {
+        if (!verifyExistence(mId, mCalendar, mTime)) {
+            return null;
+        }
+
+        Departure departure = new Departure();
+        departure.setId(mId);
+        departure.setCalendar(mCalendar);
+        departure.setTime(mTime);
+        return departure;
+    }
+
+    private boolean verifyExistence(Object... objs) {
+        if (objs.length == 0) return false;
+
+        for (Object obj : objs) {
+            if (obj == null) return false;
+        }
+
+        return true;
+    }
+
     @Override
     public String toString() {
-        return "Row { id: " + mId + "; shortName: " + mShortName + "; longName: " + mLongName + "; }";
+        Route route = getRoute();
+        if (route != null) {
+            return "Row { route: " + route + "; }";
+        }
+
+        Stop stop = getStop();
+        if (stop != null) {
+            return "Row { stop: " + stop + "; }";
+        }
+
+        Departure departure = getDeparture();
+        if (departure != null) {
+            return "Row { departure: " + departure + "; }";
+        }
+
+        return "There is no well-formed result";
     }
 }

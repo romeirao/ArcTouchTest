@@ -9,7 +9,7 @@ import br.com.italoromeiro.arctouchtest.presenters.actions.NetworkAction;
  */
 @EBean
 public class MainPresenter extends BasePresenter {
-    public void findByStopName(final String stopName) {
+    public void findRoutesByStopName(final String stopName) {
         executeAction(new NetworkAction() {
             @Override
             public void doBeforeAction() {
@@ -23,7 +23,7 @@ public class MainPresenter extends BasePresenter {
 
             @Override
             public void doAction() throws Throwable {
-                api.findByStopName(stopName);
+                api.findRoutesByStopName(stopName);
             }
         });
     }
