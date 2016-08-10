@@ -33,7 +33,7 @@ public class RestController {
     @StringRes(R.string.password)
     String mPassword;
 
-    public void findByStopName(String stopName) throws IOException {
+    public void findRoutesByStopName(String stopName) throws IOException {
         Params params = new Params();
         params.setStopName("%" + stopName + "%");
 
