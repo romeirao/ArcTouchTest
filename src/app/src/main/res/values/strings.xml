@@ -1,0 +1,7 @@
+<resources>
+    <!-- General Strings -->
+    <string name="button_label_search">Search</string>
+
+    <!-- Dialog Strings -->
+    <string name="dialog_loading_waiting">Wait for a while...</string>
+</resources>
