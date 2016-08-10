@@ -18,8 +18,11 @@ import br.com.italoromeiro.arctouchtest.models.Route;
 @EViewGroup(R.layout.item_view_route)
 public class RouteItemView extends RelativeLayout {
 
-    @ViewById(R.id.tv_route_name)
-    TextView mRouteName;
+    @ViewById(R.id.tv_route_short_name)
+    TextView mRouteShortName;
+
+    @ViewById(R.id.tv_route_long_name)
+    TextView mRouteLongName;
 
     private Route mRoute;
 
@@ -42,6 +45,7 @@ public class RouteItemView extends RelativeLayout {
 
     public void bind(Route route) {
         mRoute = route;
-        mRouteName.setText(route.getLongName());
+        mRouteShortName.setText(route.getShortName());
+        mRouteLongName.setText(route.getLongName());
     }
 }

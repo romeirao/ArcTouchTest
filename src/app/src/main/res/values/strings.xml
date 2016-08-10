@@ -1,14 +1,20 @@
 <resources>
     <!-- General Strings -->
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="button_label_search">Search</string>
     <string name="textview_label_stops">Stops</string>
     <string name="textview_label_departures">Departures</string>
+    <string name="fetching_route_data">Waiting for info...</string>
 
     <!-- Dialog Strings -->
     <string name="dialog_loading_waiting">Wait for a while...</string>
+    <string name="dialog_title_default">Hey there</string>
+    <string name="dialog_message_no_info">"We couldn\'t get info at this time. Please try again."</string>
 
     <!-- Dummy Strings -->
-    <string name="dummy_route_name" translatable="false">AGRONÔMICA VIA MAURO RAMOS</string>
+    <string name="dummy_route_short_name" translatable="false">185</string>
+    <string name="dummy_route_long_name" translatable="false">AGRONÔMICA VIA MAURO RAMOS</string>
     <string name="dummy_stop_name" translatable="false">RUA ANTÔNIO PEREIRA OLIVEIRA NETO</string>
     <string name="dummy_departure_calendar" translatable="false">WEEKDAY</string>
 </resources>

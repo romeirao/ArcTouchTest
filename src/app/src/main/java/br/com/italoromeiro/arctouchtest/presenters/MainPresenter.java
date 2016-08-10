@@ -12,16 +12,6 @@ public class MainPresenter extends BasePresenter {
     public void findRoutesByStopName(final String stopName) {
         executeAction(new NetworkAction() {
             @Override
-            public void doBeforeAction() {
-                showDialogProgress();
-            }
-
-            @Override
-            public void doAfterAction() {
-                dismissDialogProgress();
-            }
-
-            @Override
             public void doAction() throws Throwable {
                 api.findRoutesByStopName(stopName);
             }
