@@ -46,6 +46,11 @@ public class DetailActivity extends BaseActivity implements RestClient.OnRestLis
     }
 
     @Override
+    public boolean isBack() {
+        return true;
+    }
+
+    @Override
     public void onIncomeSuccess(Result result, Call call) {
         Log.d(TAG, "result has come: " + result.toString());
         manageResult(result);

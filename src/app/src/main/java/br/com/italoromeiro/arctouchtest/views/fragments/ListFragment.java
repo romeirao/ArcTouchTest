@@ -7,8 +7,11 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.androidannotations.annotations.AfterTextChange;
@@ -16,6 +19,7 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.List;
@@ -42,6 +46,12 @@ public class ListFragment extends Fragment {
     @ViewById(R.id.rv_routes)
     RecyclerView mRoutesRv;
 
+    @ViewById(R.id.progress_container)
+    LinearLayout mProgressContainer;
+
+    @ViewById(R.id.progress)
+    ProgressBar mProgress;
+
     @Bean
     RoutesAdapter mRoutesAdapter;
 
@@ -57,12 +67,23 @@ public class ListFragment extends Fragment {
     }
 
     public void setRoutes(List<Route> routes) {
+        addRoutesRv();
         mRoutesAdapter.setRoutes(routes);
         mRoutesAdapter.notifyDataSetChanged();
     }
 
+    public void clearContentIfNecessary() {
+        if (mRoutesAdapter.getItemCount() == 0) {
+            removeProgressView();
+            removeRoutesRv();
+        } else {
+            addRoutesRv();
+        }
+    }
+
     @Click(R.id.btn_search)
     public void btnSearchClick() {
+        addProgressView();
         mActivity.findByStopName(FormatterUtil.cleanString(mEtSearch.getText().toString()));
     }
 
@@ -73,6 +94,32 @@ public class ListFragment extends Fragment {
             return;
         }
         mBtnSearch.setEnabled(true);
+    }
+
+    @UiThread
+    void addRoutesRv() {
+        removeProgressView();
+
+        mRoutesRv.setVisibility(View.VISIBLE);
+    }
+
+    @UiThread
+    void removeRoutesRv() {
+        mRoutesRv.setVisibility(View.GONE);
+    }
+
+    @UiThread
+    void addProgressView() {
+        removeRoutesRv();
+
+        mProgress.setIndeterminate(true);
+        mProgressContainer.setVisibility(View.VISIBLE);
+    }
+
+    @UiThread
+    void removeProgressView() {
+        mProgress.setIndeterminate(false);
+        mProgressContainer.setVisibility(View.GONE);
     }
 
     @Override

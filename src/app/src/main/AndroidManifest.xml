@@ -5,12 +5,17 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".core.BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".views.activities.ListActivity_">
+
+        <activity
+            android:name=".views.activities.SplashScreenActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -18,7 +23,15 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".views.activities.DetailActivity_" />
+        <activity android:name=".views.activities.ListActivity_" />
+
+        <activity
+            android:name=".views.activities.DetailActivity_"
+            android:parentActivityName=".views.activities.ListActivity_">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".views.activities.ListActivity_" />
+        </activity>
     </application>
 
 </manifest>

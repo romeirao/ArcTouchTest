@@ -15,6 +15,7 @@ import br.com.italoromeiro.arctouchtest.models.Route;
 import br.com.italoromeiro.arctouchtest.models.Row;
 import br.com.italoromeiro.arctouchtest.presenters.MainPresenter;
 import br.com.italoromeiro.arctouchtest.rest.RestClient;
+import br.com.italoromeiro.arctouchtest.utils.AlertUtils;
 import br.com.italoromeiro.arctouchtest.views.fragments.ListFragment;
 import retrofit2.Call;
 
@@ -39,6 +40,7 @@ public class ListActivity extends BaseActivity implements RestClient.OnRestListe
     }
 
     private void manageResult(Result result) {
+        dismissDialogProgress();
         List<Route> routes = new ArrayList<>();
         for (Row row : result.getRows()) {
             if (row.getRoute() != null) {
@@ -51,6 +53,10 @@ public class ListActivity extends BaseActivity implements RestClient.OnRestListe
 
     @Override
     public void onIncomeFailure(Throwable t) {
+        dismissDialogProgress();
         Log.e(TAG, t.getMessage(), t);
+
+        AlertUtils.alert(this, R.string.dialog_title_default, R.string.dialog_message_no_info);
+        mListFragment.clearContentIfNecessary();
     }
 }
