@@ -1,4 +1,4 @@
-package br.com.italoromeiro.arctouchtest.models;
+package br.com.italoromeiro.arctouchtest.models.rest;
 
 import com.google.gson.annotations.SerializedName;
 

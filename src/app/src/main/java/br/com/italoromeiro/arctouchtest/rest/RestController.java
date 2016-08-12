@@ -7,9 +7,9 @@ import org.androidannotations.annotations.res.StringRes;
 import java.io.IOException;
 
 import br.com.italoromeiro.arctouchtest.R;
-import br.com.italoromeiro.arctouchtest.models.Params;
-import br.com.italoromeiro.arctouchtest.models.ParamsMap;
-import br.com.italoromeiro.arctouchtest.models.Result;
+import br.com.italoromeiro.arctouchtest.models.rest.Params;
+import br.com.italoromeiro.arctouchtest.models.rest.ParamsMap;
+import br.com.italoromeiro.arctouchtest.models.rest.Result;
 import br.com.italoromeiro.arctouchtest.rest.interfaces.AppGluService;
 import br.com.italoromeiro.arctouchtest.views.activities.BaseActivity;
 import retrofit2.Call;

@@ -1,8 +1,10 @@
-package br.com.italoromeiro.arctouchtest.models;
+package br.com.italoromeiro.arctouchtest.models.rest;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+
+import br.com.italoromeiro.arctouchtest.models.Error;
 
 /**
  * Created by italo on 09/08/16.
