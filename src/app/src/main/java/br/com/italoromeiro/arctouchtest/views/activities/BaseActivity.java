@@ -3,7 +3,10 @@ package br.com.italoromeiro.arctouchtest.views.activities;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Build;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -16,16 +19,25 @@ import android.widget.FrameLayout;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.UiThread;
+import org.androidannotations.annotations.ViewById;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
+import java.io.Serializable;
 
 import br.com.italoromeiro.arctouchtest.R;
+import br.com.italoromeiro.arctouchtest.core.bus.Events;
 import br.com.italoromeiro.arctouchtest.utils.AlertUtils;
 
 /**
  * Created by italo on 08/08/16.
  */
 @EActivity
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity implements Serializable {
     private static final String TAG = BaseActivity.class.getSimpleName();
+
+    @ViewById(R.id.tabs)
+    TabLayout mTabs;
 
     private ProgressDialog mProgressDialog;
     private FrameLayout mContent;
@@ -36,7 +48,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     private boolean mBackPressedFromToolbar = false;
 
     @AfterViews
-    public void afterViews() {
+    public void baseAfterViews() {
         Log.e(TAG, "afterViews");
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(isBack());
@@ -114,12 +126,26 @@ public abstract class BaseActivity extends AppCompatActivity {
         mBackPressedFromToolbar = false;
     }
 
+    @Subscribe
+    public void onEvent(Events events) {
+    }
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        EventBus.getDefault().register(this);
+
+        super.onCreate(savedInstanceState);
+    }
+
     @Override
     protected void onDestroy() {
         Log.d(TAG, "onDestroy");
-        super.onDestroy();
+
         dismissDialogProgress();
         AlertUtils.dismissDialog();
+        EventBus.getDefault().unregister(this);
         mDrawer.removeDrawerListener(mToggle);
+
+        super.onDestroy();
     }
 }

@@ -3,9 +3,12 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="button_label_search">Search</string>
+    <string name="textview_label_route">Route</string>
     <string name="textview_label_stops">Stops</string>
     <string name="textview_label_departures">Departures</string>
     <string name="fetching_route_data">Waiting for info...</string>
+    <string name="fragment_tag_stop" translatable="false">stop_fragment</string>
+    <string name="fragment_tag_departure" translatable="false">departure_fragment</string>
 
     <!-- Dialog Strings -->
     <string name="dialog_loading_waiting">Wait for a while...</string>

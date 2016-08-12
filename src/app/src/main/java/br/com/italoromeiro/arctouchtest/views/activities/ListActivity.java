@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.italoromeiro.arctouchtest.R;
-import br.com.italoromeiro.arctouchtest.models.Result;
+import br.com.italoromeiro.arctouchtest.models.rest.Result;
 import br.com.italoromeiro.arctouchtest.models.Route;
 import br.com.italoromeiro.arctouchtest.models.Row;
 import br.com.italoromeiro.arctouchtest.presenters.MainPresenter;

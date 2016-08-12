@@ -3,7 +3,6 @@ package br.com.italoromeiro.arctouchtest.views.fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -34,7 +33,7 @@ import br.com.italoromeiro.arctouchtest.views.activities.ListActivity;
  * Created by italo on 10/08/16.
  */
 @EFragment(R.layout.fragment_list)
-public class ListFragment extends Fragment {
+public class ListFragment extends BaseFragment {
     private static final String TAG = ListFragment.class.getSimpleName();
 
     @ViewById(R.id.et_search)
@@ -58,7 +57,7 @@ public class ListFragment extends Fragment {
     private ListActivity mActivity;
 
     @AfterViews
-    public void afterViews() {
+    public void listFragmentAfterViews() {
         // Initial config for the view
         LinearLayoutManager manager = new LinearLayoutManager(mActivity);
         mRoutesRv.setLayoutManager(manager);
@@ -120,13 +119,6 @@ public class ListFragment extends Fragment {
     void removeProgressView() {
         mProgress.setIndeterminate(false);
         mProgressContainer.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        Log.d(TAG, "onCreate");
-        super.onCreate(savedInstanceState);
-        setRetainInstance(true);
     }
 
     @Override

@@ -1,7 +1,7 @@
 package br.com.italoromeiro.arctouchtest.rest.interfaces;
 
-import br.com.italoromeiro.arctouchtest.models.ParamsMap;
-import br.com.italoromeiro.arctouchtest.models.Result;
+import br.com.italoromeiro.arctouchtest.models.rest.ParamsMap;
+import br.com.italoromeiro.arctouchtest.models.rest.Result;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
