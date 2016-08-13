@@ -46,10 +46,8 @@ public class RestClient<RestService> {
             public void onResponse(Call<T> call, Response<T> response) {
                 if (response.isSuccessful() && response.code() == 200) {
                     listener.onIncomeSuccess(response.body(), call);
-                } else if (response.code() == 403) {
-                    onFailure(call, new Exception("CODE RECEIVED: " + response.code() + " - You've reached the maximum limit access."));
                 } else {
-                    onFailure(call, new Exception(""));
+                    onFailure(call, new Exception("CODE RECEIVED: " + response.code()));
                 }
             }
 
@@ -60,11 +58,6 @@ public class RestClient<RestService> {
         });
     }
 
-    public void dispose() {
-        retrofit = null;
-        instance = null;
-    }
-
     private OkHttpClient prepareOkHttpClient(String user, String password) {
         return new OkHttpClient.Builder()
                 .connectTimeout(10, TimeUnit.SECONDS)
@@ -72,14 +65,6 @@ public class RestClient<RestService> {
                 .readTimeout(30, TimeUnit.SECONDS)
                 .addInterceptor(new HeaderInterceptor())
                 .authenticator(getAuthenticator(user, password))
-                .build();
-    }
-
-    private Retrofit prepareRetrofitClient(String url, OkHttpClient client) {
-        return new Retrofit.Builder()
-                .client(client)
-                .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create())
                 .build();
     }
 
@@ -93,6 +78,19 @@ public class RestClient<RestService> {
                         .build();
             }
         };
+    }
+
+    private Retrofit prepareRetrofitClient(String url, OkHttpClient client) {
+        return new Retrofit.Builder()
+                .client(client)
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+    }
+
+    public void dismiss() {
+        retrofit = null;
+        instance = null;
     }
 
     static class HeaderInterceptor implements Interceptor {
