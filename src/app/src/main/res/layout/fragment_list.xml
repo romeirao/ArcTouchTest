@@ -16,12 +16,21 @@
         android:layout_marginBottom="@dimen/activity_horizontal_margin"
         android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/et_search"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_search"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:inputType="textCapWords" />
+            android:layout_weight="1">
+
+            <EditText
+                android:id="@+id/et_search"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:imeOptions="actionDone"
+                android:hint="@string/hint_search"
+                android:inputType="textCapWords" />
+
+        </android.support.design.widget.TextInputLayout>
 
         <Button
             android:id="@+id/btn_search"
@@ -31,6 +40,13 @@
             android:text="@string/button_label_search" />
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_amount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:text="@string/hint_search" />
 
     <FrameLayout
         android:layout_width="match_parent"

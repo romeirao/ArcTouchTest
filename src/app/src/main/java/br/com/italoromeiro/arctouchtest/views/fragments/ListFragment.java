@@ -3,10 +3,12 @@ package br.com.italoromeiro.arctouchtest.views.fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -51,6 +53,12 @@ public class ListFragment extends BaseFragment {
     @ViewById(R.id.progress)
     ProgressBar mProgress;
 
+    @ViewById(R.id.tv_amount)
+    TextView mRouteAmount;
+
+    @ViewById(R.id.input_layout_search)
+    TextInputLayout mTextInputLayout;
+
     @Bean
     RoutesAdapter mRoutesAdapter;
 
@@ -66,9 +74,15 @@ public class ListFragment extends BaseFragment {
     }
 
     public void setRoutes(List<Route> routes) {
-        addRoutesRv();
-        mRoutesAdapter.setRoutes(routes);
-        mRoutesAdapter.notifyDataSetChanged();
+        if (!routes.isEmpty()) {
+            mRouteAmount.setText(getResources().getQuantityString(R.plurals.textview_label_amount, routes.size(), routes.size()));
+            mRoutesAdapter.setRoutes(routes);
+            mRoutesAdapter.notifyDataSetChanged();
+            addRoutesRv();
+        } else {
+            removeProgressView();
+            mRouteAmount.setText(getResources().getString(R.string.textview_label_route_empty));
+        }
     }
 
     public void clearContentIfNecessary() {
@@ -82,8 +96,20 @@ public class ListFragment extends BaseFragment {
 
     @Click(R.id.btn_search)
     public void btnSearchClick() {
-        addProgressView();
-        mActivity.findByStopName(FormatterUtil.cleanString(mEtSearch.getText().toString()));
+        if (mEtSearch.getText().toString().isEmpty()) {
+            mTextInputLayout.setError(getString(R.string.error_empty_string));
+            requestFocus(mEtSearch);
+        } else {
+            mTextInputLayout.setErrorEnabled(false);
+            addProgressView();
+            mActivity.findByStopName(FormatterUtil.cleanString(mEtSearch.getText().toString()));
+        }
+    }
+
+    private void requestFocus(View view) {
+        if (view.requestFocus()) {
+            mActivity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        }
     }
 
     @AfterTextChange(R.id.et_search)
@@ -111,6 +137,7 @@ public class ListFragment extends BaseFragment {
     void addProgressView() {
         removeRoutesRv();
 
+        mRouteAmount.setText(getResources().getString(R.string.textview_label_route_searching));
         mProgress.setIndeterminate(true);
         mProgressContainer.setVisibility(View.VISIBLE);
     }

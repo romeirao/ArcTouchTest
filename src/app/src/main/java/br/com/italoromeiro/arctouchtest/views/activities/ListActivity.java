@@ -10,10 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.italoromeiro.arctouchtest.R;
-import br.com.italoromeiro.arctouchtest.models.rest.Result;
 import br.com.italoromeiro.arctouchtest.models.Route;
 import br.com.italoromeiro.arctouchtest.models.Row;
-import br.com.italoromeiro.arctouchtest.presenters.MainPresenter;
+import br.com.italoromeiro.arctouchtest.models.rest.Result;
+import br.com.italoromeiro.arctouchtest.presenters.ListPresenter;
 import br.com.italoromeiro.arctouchtest.rest.RestClient;
 import br.com.italoromeiro.arctouchtest.utils.AlertUtils;
 import br.com.italoromeiro.arctouchtest.views.fragments.ListFragment;
@@ -24,7 +24,7 @@ public class ListActivity extends BaseActivity implements RestClient.OnRestListe
     private static final String TAG = ListActivity.class.getSimpleName();
 
     @Bean
-    MainPresenter presenter;
+    ListPresenter presenter;
 
     @FragmentById(R.id.fragment_list)
     ListFragment mListFragment;
@@ -37,6 +37,15 @@ public class ListActivity extends BaseActivity implements RestClient.OnRestListe
     public void onIncomeSuccess(Result result, Call call) {
         Log.d(TAG, "result has come: " + result.toString());
         manageResult(result);
+    }
+
+    @Override
+    public void onIncomeFailure(Throwable t) {
+        dismissDialogProgress();
+        Log.e(TAG, t.getMessage(), t);
+
+        AlertUtils.alert(this, R.string.dialog_title_default, R.string.dialog_message_no_info);
+        mListFragment.clearContentIfNecessary();
     }
 
     private void manageResult(Result result) {
@@ -52,11 +61,7 @@ public class ListActivity extends BaseActivity implements RestClient.OnRestListe
     }
 
     @Override
-    public void onIncomeFailure(Throwable t) {
-        dismissDialogProgress();
-        Log.e(TAG, t.getMessage(), t);
-
-        AlertUtils.alert(this, R.string.dialog_title_default, R.string.dialog_message_no_info);
-        mListFragment.clearContentIfNecessary();
+    public ListPresenter getPresenter() {
+        return presenter;
     }
 }

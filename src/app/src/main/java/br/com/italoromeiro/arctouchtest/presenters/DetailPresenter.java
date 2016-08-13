@@ -13,7 +13,7 @@ public class DetailPresenter extends BasePresenter{
         executeAction(new NetworkAction() {
             @Override
             public void doAction() throws Throwable {
-                api.findStopsByRouteId(routeId);
+                mApi.findStopsByRouteId(routeId);
             }
         });
     }
@@ -22,7 +22,7 @@ public class DetailPresenter extends BasePresenter{
         executeAction(new NetworkAction() {
             @Override
             public void doAction() throws Throwable {
-                api.findDeparturesByRouteId(routeId);
+                mApi.findDeparturesByRouteId(routeId);
             }
         });
     }

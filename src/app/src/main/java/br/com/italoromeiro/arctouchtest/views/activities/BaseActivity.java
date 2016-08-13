@@ -27,6 +27,7 @@ import java.io.Serializable;
 
 import br.com.italoromeiro.arctouchtest.R;
 import br.com.italoromeiro.arctouchtest.core.bus.Events;
+import br.com.italoromeiro.arctouchtest.presenters.BasePresenter;
 import br.com.italoromeiro.arctouchtest.utils.AlertUtils;
 
 /**
@@ -147,5 +148,9 @@ public abstract class BaseActivity extends AppCompatActivity implements Serializ
         mDrawer.removeDrawerListener(mToggle);
 
         super.onDestroy();
+    }
+
+    public BasePresenter getPresenter() {
+        return null;
     }
 }
