@@ -9,6 +9,10 @@
     <string name="textview_label_route_searching" translatable="false">...</string>
     <string name="textview_label_stops">Stops</string>
     <string name="textview_label_departures">Departures</string>
+    <string name="textview_label_departures_weekday">WEEKDAY</string>
+    <string name="textview_label_departures_saturday">SATURDAY</string>
+    <string name="textview_label_departures_sunday">SUNDAY</string>
+    <string name="textview_label_departures_empty">There is no schedule to show</string>
 
     <plurals name="textview_label_amount">
         <item quantity="one">%d route found</item>

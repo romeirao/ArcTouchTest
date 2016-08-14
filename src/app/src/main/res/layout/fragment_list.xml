@@ -46,7 +46,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"
-        android:text="@string/hint_search" />
+        android:text="@string/textview_label_route_searching" />
 
     <FrameLayout
         android:layout_width="match_parent"
