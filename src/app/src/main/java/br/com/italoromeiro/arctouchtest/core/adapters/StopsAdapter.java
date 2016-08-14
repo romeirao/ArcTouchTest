@@ -33,7 +33,7 @@ public class StopsAdapter extends RecyclerView.Adapter<StopsAdapter.StopHolder> 
 
     @Override
     public void onBindViewHolder(StopHolder holder, int position) {
-        ((StopItemView) holder.itemView).bind(mStops.get(position));
+        ((StopItemView) holder.itemView).bind(mStops.get(position), position, getItemCount());
     }
 
     @Override

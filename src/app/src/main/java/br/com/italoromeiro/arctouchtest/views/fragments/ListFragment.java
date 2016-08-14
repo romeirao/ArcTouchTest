@@ -20,6 +20,7 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.InstanceState;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 
@@ -62,6 +63,9 @@ public class ListFragment extends BaseFragment {
     @Bean
     RoutesAdapter mRoutesAdapter;
 
+    @InstanceState
+    String mTxtAmount;
+
     private ListActivity mActivity;
 
     @AfterViews
@@ -71,17 +75,23 @@ public class ListFragment extends BaseFragment {
         mRoutesRv.setLayoutManager(manager);
         mRoutesRv.setHasFixedSize(true);
         mRoutesRv.setAdapter(mRoutesAdapter);
+
+        if (mTxtAmount != null) {
+            mRouteAmount.setText(mTxtAmount);
+        }
     }
 
     public void setRoutes(List<Route> routes) {
         if (!routes.isEmpty()) {
-            mRouteAmount.setText(getResources().getQuantityString(R.plurals.textview_label_amount, routes.size(), routes.size()));
+            mTxtAmount = getResources().getQuantityString(R.plurals.textview_label_amount, routes.size(), routes.size());
+            mRouteAmount.setText(mTxtAmount);
             mRoutesAdapter.setRoutes(routes);
             mRoutesAdapter.notifyDataSetChanged();
             addRoutesRv();
         } else {
             removeProgressView();
-            mRouteAmount.setText(getResources().getString(R.string.textview_label_route_empty));
+            mTxtAmount = getResources().getString(R.string.textview_label_route_empty);
+            mRouteAmount.setText(mTxtAmount);
         }
     }
 
@@ -137,7 +147,8 @@ public class ListFragment extends BaseFragment {
     void addProgressView() {
         removeRoutesRv();
 
-        mRouteAmount.setText(getResources().getString(R.string.textview_label_route_searching));
+        mTxtAmount = getResources().getString(R.string.textview_label_route_searching);
+        mRouteAmount.setText(mTxtAmount);
         mProgress.setIndeterminate(true);
         mProgressContainer.setVisibility(View.VISIBLE);
     }

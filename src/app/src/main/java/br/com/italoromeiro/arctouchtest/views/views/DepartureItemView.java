@@ -42,6 +42,6 @@ public class DepartureItemView extends RelativeLayout {
 
     public void bind(Departure departure) {
         mDeparture = departure;
-        mDepartureCalendarTv.setText(departure.getCalendar());
+        mDepartureCalendarTv.setText(departure.getTime());
     }
 }

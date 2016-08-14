@@ -40,8 +40,10 @@ public class StopItemView extends RelativeLayout {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
-    public void bind(Stop stop) {
+    public void bind(Stop stop, int position, final int total) {
+        int auxPosition = position + 1;
+
         mStop = stop;
-        mStopName.setText(stop.getName());
+        mStopName.setText(auxPosition + ") " + stop.getName());
     }
 }
