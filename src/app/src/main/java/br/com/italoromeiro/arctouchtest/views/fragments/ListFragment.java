@@ -104,6 +104,7 @@ public class ListFragment extends BaseFragment {
         }
     }
 
+    @UiThread
     public void setRoutes(List<Route> routes) {
         if (!routes.isEmpty()) {
             mTxtAmount = getResources().getQuantityString(R.plurals.textview_label_amount, routes.size(), routes.size());
