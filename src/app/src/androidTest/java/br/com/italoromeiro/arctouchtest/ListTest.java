@@ -70,6 +70,17 @@ public class ListTest {
     }
 
     @Test
+    public void reachDetailView() throws Exception {
+        SearchRobot searchRobot = new SearchRobot();
+
+        SearchResultRobot searchResultRobot = searchRobot
+                .where(TestConstants.STOP_NAME_GOOD_WITH_MANY_RESULTS)
+                .search();
+
+        searchResultRobot.reachDetailView();
+    }
+
+    @Test
     public void searchFail() throws Exception {
         SearchRobot searchRobot = new SearchRobot();
 
