@@ -2,6 +2,11 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="dim_peek_height">200dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="text_size_large">24dp</dimen>
+    <dimen name="text_size_normal">16dp</dimen>
+    <dimen name="text_size_small">12dp</dimen>
 
     <!-- NAVIGATION DRAWER -->
     <dimen name="avatar_width">70dp</dimen>

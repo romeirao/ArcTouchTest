@@ -36,6 +36,7 @@ public abstract class BaseFragment extends Fragment {
     public void onDestroy() {
         Log.d(TAG, "onDestroy");
         EventBus.getDefault().unregister(this);
+        mBaseActivity.dismissDialogProgress();
         super.onDestroy();
     }
 

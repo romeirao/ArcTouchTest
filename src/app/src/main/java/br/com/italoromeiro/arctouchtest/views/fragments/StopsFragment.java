@@ -3,6 +3,8 @@ package br.com.italoromeiro.arctouchtest.views.fragments;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
@@ -27,6 +29,9 @@ public class StopsFragment extends BaseFragment {
     @ViewById(R.id.rv_stops)
     RecyclerView mStopsRv;
 
+    @ViewById(R.id.tv_stops_empty)
+    TextView mStopsEmpty;
+
     @Bean
     StopsAdapter mStopsAdapter;
 
@@ -43,8 +48,13 @@ public class StopsFragment extends BaseFragment {
 
     public void setStops(List<Stop> stops) {
         mStops = stops;
-        mStopsAdapter.setStops(stops);
-        mStopsAdapter.notifyDataSetChanged();
+        if (mStopsAdapter != null) {
+            mStopsAdapter.setStops(stops);
+            mStopsAdapter.notifyDataSetChanged();
+
+            mStopsRv.setVisibility(View.VISIBLE);
+            mStopsEmpty.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -53,6 +63,9 @@ public class StopsFragment extends BaseFragment {
         super.onResume();
         if (mStops == null) {
             EventBus.getDefault().post(new Events.StopsViewReadyEvent());
+        } else if (!mStops.isEmpty()) {
+            mStopsRv.setVisibility(View.VISIBLE);
+            mStopsEmpty.setVisibility(View.GONE);
         }
     }
 }
