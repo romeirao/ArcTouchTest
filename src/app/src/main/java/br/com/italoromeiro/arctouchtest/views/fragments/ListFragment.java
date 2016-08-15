@@ -1,5 +1,6 @@
 package br.com.italoromeiro.arctouchtest.views.fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -21,16 +22,21 @@ import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.InstanceState;
+import org.androidannotations.annotations.OnActivityResult;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import br.com.italoromeiro.arctouchtest.R;
+import br.com.italoromeiro.arctouchtest.core.GeneralConstants;
 import br.com.italoromeiro.arctouchtest.core.adapters.RoutesAdapter;
 import br.com.italoromeiro.arctouchtest.models.Route;
 import br.com.italoromeiro.arctouchtest.utils.FormatterUtil;
 import br.com.italoromeiro.arctouchtest.views.activities.ListActivity;
+import br.com.italoromeiro.arctouchtest.views.activities.MapActivity_;
 
 /**
  * Created by italo on 10/08/16.
@@ -66,6 +72,8 @@ public class ListFragment extends BaseFragment {
     @InstanceState
     String mTxtAmount;
 
+    private final int REQUEST_STREET_NAME_FROM_MAP = 1;
+
     private ListActivity mActivity;
 
     @AfterViews
@@ -76,8 +84,23 @@ public class ListFragment extends BaseFragment {
         mRoutesRv.setHasFixedSize(true);
         mRoutesRv.setAdapter(mRoutesAdapter);
 
-        if (mTxtAmount != null) {
-            mRouteAmount.setText(mTxtAmount);
+        prepareDataForView();
+    }
+
+    /*
+     * If there are some data to show, it will be prepared here
+     */
+    private void prepareDataForView() {
+        if (mTxtAmount == null) {
+            return;
+        }
+
+        mRouteAmount.setText(mTxtAmount);
+
+        Pattern p = Pattern.compile(".*\\d+.*");
+        Matcher m = p.matcher(mTxtAmount);
+        if (m.matches()) {
+            mRoutesRv.setVisibility(View.VISIBLE);
         }
     }
 
@@ -116,9 +139,24 @@ public class ListFragment extends BaseFragment {
         }
     }
 
+    @Click(R.id.btn_search_by_map)
+    public void btnSearchByMapClick() {
+        MapActivity_.intent(this).startForResult(REQUEST_STREET_NAME_FROM_MAP);
+    }
+
     private void requestFocus(View view) {
         if (view.requestFocus()) {
             mActivity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        }
+    }
+
+    @OnActivityResult(REQUEST_STREET_NAME_FROM_MAP)
+    public void handleRequestStreetNameFromMap(int resultCode, @OnActivityResult.Extra(value = GeneralConstants.REQUEST_STREET_NAME) String streetName) {
+        Log.d(TAG, "handleRequestStreetNameFromMap");
+
+        if (resultCode == Activity.RESULT_OK && streetName != null) {
+            mEtSearch.setText(streetName);
+            mBtnSearch.performClick();
         }
     }
 

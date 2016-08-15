@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <fragment
+        android:id="@+id/map"
+        class="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout="@layout/dummy_map_view" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/bottom_sheet"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@color/white"
+        android:clipToPadding="true"
+        android:padding="@dimen/item_view_padding"
+        app:behavior_peekHeight="@dimen/dim_peek_height"
+        app:layout_behavior="@string/bottom_sheet_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/textview_label_map_street_selected"
+                android:textSize="@dimen/text_size_normal" />
+
+            <TextView
+                android:id="@+id/tv_address_result"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/textview_label_map_street_selected_none"
+                android:textSize="@dimen/text_size_large" />
+
+            <Button
+                android:id="@+id/bt_ok"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/button_label_ok" />
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@drawable/ic_gps_fixed_black_48dp"
+        app:layout_anchor="@id/bottom_sheet"
+        app:layout_anchorGravity="top|right|end" />
+
+</android.support.design.widget.CoordinatorLayout>

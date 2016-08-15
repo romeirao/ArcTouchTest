@@ -26,38 +26,49 @@
                 android:id="@+id/et_search"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:imeOptions="actionDone"
                 android:hint="@string/hint_search"
+                android:imeOptions="actionDone"
                 android:inputType="textCapWords" />
 
         </android.support.design.widget.TextInputLayout>
 
-        <Button
-            android:id="@+id/btn_search"
+        <ImageButton
+            android:id="@+id/btn_search_by_map"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:enabled="false"
-            android:text="@string/button_label_search" />
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/item_view_padding"
+            android:background="@drawable/ic_map_black_48dp" />
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:enabled="false"
+        android:text="@string/button_label_search" />
 
     <TextView
         android:id="@+id/tv_amount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:text="@string/textview_label_route_searching" />
+        android:layout_marginTop="@dimen/item_view_padding"
+        android:text="@string/textview_label_route_searching"
+        android:textAlignment="center" />
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="@dimen/item_view_padding"
         android:layout_weight="1">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_routes"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scrollbars="vertical" />
+            android:scrollbars="vertical"
+            android:visibility="gone" />
 
         <include layout="@layout/layout_fetching_route_list" />
 

@@ -29,6 +29,7 @@ import br.com.italoromeiro.arctouchtest.R;
 import br.com.italoromeiro.arctouchtest.core.bus.Events;
 import br.com.italoromeiro.arctouchtest.presenters.BasePresenter;
 import br.com.italoromeiro.arctouchtest.utils.AlertUtils;
+import br.com.italoromeiro.arctouchtest.utils.PermissionUtils;
 
 /**
  * Created by italo on 08/08/16.
@@ -40,9 +41,9 @@ public abstract class BaseActivity extends AppCompatActivity implements Serializ
     @ViewById(R.id.tabs)
     TabLayout mTabs;
 
+    protected Toolbar mToolbar;
     private ProgressDialog mProgressDialog;
     private FrameLayout mContent;
-    private Toolbar mToolbar;
     private ActionBarDrawerToggle mToggle;
     private NavigationView mNavigationView;
     private DrawerLayout mDrawer;
@@ -129,6 +130,15 @@ public abstract class BaseActivity extends AppCompatActivity implements Serializ
 
     @Subscribe
     public void onEvent(Events events) {
+    }
+
+    public void showMissingPermissionError() {
+        PermissionUtils.PermissionDeniedDialog.newInstance(true).show(getSupportFragmentManager(), "dialog");
+    }
+
+    @UiThread
+    public void showGeneralErrorDialog() {
+        AlertUtils.alert(this, R.string.dialog_title_default, R.string.dialog_message_no_info);
     }
 
     @Override

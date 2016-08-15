@@ -16,7 +16,9 @@ public class AlertUtils {
         alert(context, titleId, messageId, 0, null, 0, null, 0);
     }
 
-    private static void alert(Context context, int titleId, int messageId, int okButtonId, DialogInterface.OnClickListener okListener, int noButtonId, DialogInterface.OnClickListener noListener, int icon) {
+    public static synchronized void alert(Context context, int titleId, int messageId, int okButtonId, DialogInterface.OnClickListener okListener, int noButtonId, DialogInterface.OnClickListener noListener, int icon) {
+        dismissDialog();
+
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
         if (okButtonId > 0 && okListener != null) {
@@ -34,7 +36,7 @@ public class AlertUtils {
         dialog.show();
     }
 
-    public static void dismissDialog() {
+    public static synchronized void dismissDialog() {
         if (dialog != null) {
             dialog.dismiss();
             dialog = null;

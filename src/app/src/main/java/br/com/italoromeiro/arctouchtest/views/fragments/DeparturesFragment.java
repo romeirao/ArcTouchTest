@@ -8,9 +8,11 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
+import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.InstanceState;
 import org.androidannotations.annotations.ViewById;
 import org.greenrobot.eventbus.EventBus;
 
@@ -59,7 +61,15 @@ public class DeparturesFragment extends BaseFragment {
     @Bean
     DeparturesAdapter mSundayAdapter;
 
+    @InstanceState
+    public int mCountWeekday, mCountSaturday, mCountSunday;
+
     private List<Departure> mDepartures;
+
+    @AfterInject
+    public void inject() {
+        Log.d(TAG, "afterInject");
+    }
 
     @AfterViews
     public void departuresFragmentAfterViews() {
@@ -77,7 +87,11 @@ public class DeparturesFragment extends BaseFragment {
     }
 
     public void setDepartures(List<Departure> departures) {
+        Log.e("italo italo", "setDepartures");
         mDepartures = departures;
+        if (mWeekdayAdapter == null || mSaturdayAdapter == null || mSundayAdapter == null) {
+            return;
+        }
 
         List<Departure> weekdayListAux = new ArrayList<>();
         List<Departure> saturdayListAux = new ArrayList<>();
@@ -97,8 +111,11 @@ public class DeparturesFragment extends BaseFragment {
             }
         }
 
-        applyChangesToDataAndView(mWeekdayAdapter, weekdayListAux, mSaturdayRv);
+        mCountWeekday = weekdayListAux.size();
+        applyChangesToDataAndView(mWeekdayAdapter, weekdayListAux, mWeekdayRv);
+        mCountSaturday = saturdayListAux.size();
         applyChangesToDataAndView(mSaturdayAdapter, saturdayListAux, mSaturdayRv);
+        mCountSunday = sundayListAux.size();
         applyChangesToDataAndView(mSundayAdapter, sundayListAux, mSundayRv);
     }
 
@@ -107,15 +124,29 @@ public class DeparturesFragment extends BaseFragment {
         adapter.notifyDataSetChanged();
         if (departures.isEmpty()) {
             view.setVisibility(View.GONE);
+        } else {
+            view.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void changeVisibility(int count, View view) {
+        if (count > 0) {
+            view.setVisibility(View.VISIBLE);
+        } else {
+            view.setVisibility(View.GONE);
         }
     }
 
     @Override
     public void onResume() {
         Log.d(TAG, "onResume");
+        Log.e("italo italo", "onResume");
         super.onResume();
         if (mDepartures == null) {
             EventBus.getDefault().post(new Events.DeparturesViewReadyEvent());
         }
+        changeVisibility(mCountWeekday, mWeekdayRv);
+        changeVisibility(mCountSaturday, mSaturdayRv);
+        changeVisibility(mCountSunday, mSundayRv);
     }
 }

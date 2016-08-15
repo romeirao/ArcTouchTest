@@ -93,12 +93,9 @@ public class DetailActivity extends BaseActivity implements RestClient.OnRestLis
         viewPager.setAdapter(adapter);
     }
 
-    public void setStops(List<Stop> stops) {
-        mStopsFragment.setStops(stops);
-    }
-
-    public void setDepartures(List<Departure> departures) {
-        mDeparturesFragment.setDepartures(departures);
+    @Override
+    public boolean isBack() {
+        return true;
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -114,11 +111,6 @@ public class DetailActivity extends BaseActivity implements RestClient.OnRestLis
     }
 
     @Override
-    public boolean isBack() {
-        return true;
-    }
-
-    @Override
     public void onIncomeSuccess(Result result, Call call) {
         Log.d(TAG, "result has come: " + result.toString());
         manageResult(result);
@@ -126,7 +118,10 @@ public class DetailActivity extends BaseActivity implements RestClient.OnRestLis
 
     @Override
     public void onIncomeFailure(Throwable t) {
+        dismissDialogProgress();
         Log.e(TAG, t.getMessage(), t);
+
+        showGeneralErrorDialog();
     }
 
     private void manageResult(Result result) {
@@ -145,22 +140,22 @@ public class DetailActivity extends BaseActivity implements RestClient.OnRestLis
         if (!stops.isEmpty()) {
             mStopsMap = new StopsMap();
             mStopsMap.setStops(stops);
-            applyStops(mStopsMap);
+            setStops(mStopsMap.getStops());
         }
 
         if (!departures.isEmpty()) {
             mDeparturesMap = new DeparturesMap();
             mDeparturesMap.setDepartures(departures);
-            applyDepartures(mDeparturesMap);
+            setDepartures(mDeparturesMap.getDepartures());
         }
     }
 
-    private void applyStops(StopsMap stopsMap) {
-        setStops(stopsMap.getStops());
+    public void setStops(List<Stop> stops) {
+        mStopsFragment.setStops(stops);
     }
 
-    private void applyDepartures(DeparturesMap departuresMap) {
-        setDepartures(departuresMap.getDepartures());
+    public void setDepartures(List<Departure> departures) {
+        mDeparturesFragment.setDepartures(departures);
     }
 
     static class Adapter extends FragmentPagerAdapter {

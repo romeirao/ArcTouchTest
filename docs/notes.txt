@@ -6,3 +6,6 @@ https://google.github.io/android-testing-support-library/docs/espresso/setup/ind
 
 MockWebServer
 https://github.com/square/okhttp/tree/master/mockwebserver
+
+Material Design Palette
+https://www.materialpalette.com/
