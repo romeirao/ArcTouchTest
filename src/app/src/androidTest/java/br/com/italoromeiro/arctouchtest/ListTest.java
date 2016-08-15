@@ -9,6 +9,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import br.com.italoromeiro.arctouchtest.core.TestConstants;
 import br.com.italoromeiro.arctouchtest.rest.MockRestController;
 import br.com.italoromeiro.arctouchtest.robots.SearchResultRobot;
 import br.com.italoromeiro.arctouchtest.robots.SearchRobot;
@@ -36,13 +37,46 @@ public class ListTest {
     }
 
     @Test
-    public void searchSuccess() throws Exception {
+    public void searchSuccessWithManyResults() throws Exception {
         SearchRobot searchRobot = new SearchRobot();
 
         SearchResultRobot searchResultRobot = searchRobot
-                .where("lauro linhares")
+                .where(TestConstants.STOP_NAME_GOOD_WITH_MANY_RESULTS)
                 .search();
 
-        searchResultRobot.isSuccess();
+        searchResultRobot.isSuccessWithManyResults();
+    }
+
+    @Test
+    public void searchSuccessWithOneResult() throws Exception {
+        SearchRobot searchRobot = new SearchRobot();
+
+        SearchResultRobot searchResultRobot = searchRobot
+                .where(TestConstants.STOP_NAME_GOOD_WITH_ONE_RESULT)
+                .search();
+
+        searchResultRobot.isSuccessWithOneResult();
+    }
+
+    @Test
+    public void searchSuccessWithoutResults() throws Exception {
+        SearchRobot searchRobot = new SearchRobot();
+
+        SearchResultRobot searchResultRobot = searchRobot
+                .where(TestConstants.STOP_NAME_GOOD_WITHOUT_RESULTS)
+                .search();
+
+        searchResultRobot.isSuccessWithoutResults();
+    }
+
+    @Test
+    public void searchFail() throws Exception {
+        SearchRobot searchRobot = new SearchRobot();
+
+        SearchResultRobot searchResultRobot = searchRobot
+                .where(TestConstants.STOP_NAME_FAIL)
+                .search();
+
+        searchResultRobot.isFail();
     }
 }

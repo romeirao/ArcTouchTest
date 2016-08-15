@@ -3,6 +3,8 @@ package br.com.italoromeiro.arctouchtest.rest;
 import java.io.IOException;
 
 import br.com.italoromeiro.arctouchtest.R;
+import br.com.italoromeiro.arctouchtest.core.TestConstants;
+import br.com.italoromeiro.arctouchtest.models.rest.Params;
 import br.com.italoromeiro.arctouchtest.models.rest.ParamsMap;
 import br.com.italoromeiro.arctouchtest.models.rest.Result;
 import br.com.italoromeiro.arctouchtest.rest.interfaces.AppGluService;
@@ -45,9 +47,15 @@ public class MockRestController extends RestController {
 
     @Override
     public void findRoutesByStopName(String stopName) throws IOException {
-        Call<Result> call = mMockAppGluService.findRoutesByStopName(new ParamsMap());
+        Call<Result> call = mMockAppGluService.findRoutesByStopName(prepareFakeParamsMap(stopName, null));
         Response<Result> response = call.execute();
-        ((RestClient.OnRestListener) mActivity).onIncomeSuccess(response.body(), call);
+        switch (stopName) {
+            case TestConstants.STOP_NAME_FAIL:
+                ((RestClient.OnRestListener) mActivity).onIncomeFailure(new IOException());
+                break;
+            default:
+                ((RestClient.OnRestListener) mActivity).onIncomeSuccess(response.body(), call);
+        }
     }
 
     @Override
@@ -62,5 +70,16 @@ public class MockRestController extends RestController {
         Call<Result> call = mMockAppGluService.findDeparturesByRouteId(new ParamsMap());
         Response<Result> response = call.execute();
         ((RestClient.OnRestListener) mActivity).onIncomeSuccess(response.body(), call);
+    }
+
+    private ParamsMap prepareFakeParamsMap(String stopName, Integer routeId) {
+        Params params = new Params();
+        params.setStopName(stopName);
+        params.setRouteId(routeId);
+
+        ParamsMap paramsMap = new ParamsMap();
+        paramsMap.setParams(params);
+
+        return paramsMap;
     }
 }
