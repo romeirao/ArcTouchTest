@@ -1,0 +1,50 @@
+{
+  "rows": [
+    {
+      "id": 1,
+      "calendar": "WEEKDAY",
+      "time": "06:00"
+    },
+    {
+      "id": 2,
+      "calendar": "WEEKDAY",
+      "time": "06:30"
+    },
+    {
+      "id": 3,
+      "calendar": "WEEKDAY",
+      "time": "07:00"
+    },
+    {
+      "id": 4,
+      "calendar": "SATURDAY",
+      "time": "07:30"
+    },
+    {
+      "id": 5,
+      "calendar": "SATURDAY",
+      "time": "08:00"
+    },
+    {
+      "id": 6,
+      "calendar": "SATURDAY",
+      "time": "08:30"
+    },
+    {
+      "id": 7,
+      "calendar": "SUNDAY",
+      "time": "09:00"
+    },
+    {
+      "id": 8,
+      "calendar": "SUNDAY",
+      "time": "09:30"
+    },
+    {
+      "id": 9,
+      "calendar": "SUNDAY",
+      "time": "10:00"
+    }
+  ],
+  "rowsAffected": 0
+}

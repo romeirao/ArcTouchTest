@@ -19,10 +19,10 @@ public class BasePresenter {
     private static final String TAG = BasePresenter.class.getSimpleName();
 
     @RootContext
-    BaseActivity activity;
+    BaseActivity mActivity;
 
     @Bean
-    RestController api;
+    RestController mApi;
 
     private NetworkAction mRetriable;
 
@@ -61,10 +61,14 @@ public class BasePresenter {
     }
 
     public void showDialogProgress() {
-        activity.showDialogProgress();
+        mActivity.showDialogProgress();
     }
 
     public void dismissDialogProgress() {
-        activity.dismissDialogProgress();
+        mActivity.dismissDialogProgress();
+    }
+
+    public void setRestController(RestController api) {
+        mApi = api;
     }
 }
