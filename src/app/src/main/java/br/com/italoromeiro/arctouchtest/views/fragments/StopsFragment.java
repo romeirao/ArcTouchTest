@@ -47,14 +47,16 @@ public class StopsFragment extends BaseFragment {
     }
 
     public void setStops(List<Stop> stops) {
-        mStops = stops;
-        if (mStopsAdapter != null) {
-            mStopsAdapter.setStops(stops);
-            mStopsAdapter.notifyDataSetChanged();
-
-            mStopsRv.setVisibility(View.VISIBLE);
-            mStopsEmpty.setVisibility(View.GONE);
+        if (mStopsAdapter == null || mStopsRv == null) {
+            return;
         }
+
+        mStops = stops;
+        mStopsAdapter.setStops(stops);
+        mStopsAdapter.notifyDataSetChanged();
+
+        mStopsRv.setVisibility(View.VISIBLE);
+        mStopsEmpty.setVisibility(View.GONE);
     }
 
     @Override

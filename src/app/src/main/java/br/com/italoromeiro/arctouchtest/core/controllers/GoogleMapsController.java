@@ -12,7 +12,6 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
@@ -27,16 +26,13 @@ import br.com.italoromeiro.arctouchtest.views.activities.BaseActivity;
  * Created by italo on 18/07/16.
  */
 @EBean
-public class GoogleMapsController implements GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener, OnMapReadyCallback, GoogleMap.OnMyLocationButtonClickListener {
+public class GoogleMapsController implements GoogleMap.OnCameraMoveStartedListener, GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener, OnMapReadyCallback, GoogleMap.OnMyLocationButtonClickListener {
     private static final String TAG = GoogleMapsController.class.getSimpleName();
 
     @RootContext
     BaseActivity activity;
 
-    private static final int MINIMUM_DISTANCE_IN_METERS_FOR_BEARING = 10;
-
     private GoogleMap mMap;
-    private Marker mCurrLocationMarker;
     private Location mLastLocation;
     private boolean mIsUpdatingLocation = true;
     private int mLeft, mTop, mRight, mBottom;
@@ -65,6 +61,10 @@ public class GoogleMapsController implements GoogleMap.OnMapClickListener, Googl
     }
 
     public void goToThatPoint(LatLng latLng) {
+        if (latLng == null) {
+            Log.d(TAG, "latLng came null. is it correct?");
+            return;
+        }
         mLastLocation.setLatitude(latLng.latitude);
         mLastLocation.setLongitude(latLng.longitude);
         moveCamera(new LatLng(latLng.latitude, latLng.longitude));
@@ -89,6 +89,7 @@ public class GoogleMapsController implements GoogleMap.OnMapClickListener, Googl
 
     @Override
     public void onMapClick(LatLng latLng) {
+        mIsUpdatingLocation = false;
         EventBus.getDefault().post(new Events.MapAction(Events.MapAction.ActionType.CLICK, latLng));
     }
 
@@ -105,6 +106,27 @@ public class GoogleMapsController implements GoogleMap.OnMapClickListener, Googl
         return false;
     }
 
+    public void fakeMyLocationButtonClick() {
+        mIsUpdatingLocation = true;
+    }
+
+//    @Override
+//    public void onCameraMove() {
+//        mIsUpdatingLocation = false;
+//        EventBus.getDefault().post(new Events.MapAction(Events.MapAction.ActionType.CAMERA_MOVES));
+//    }
+
+//    @Override
+//    public void onCameraMoveCanceled() {
+//        mIsUpdatingLocation = false;
+//        EventBus.getDefault().post(new Events.MapAction(Events.MapAction.ActionType.CAMERA_MOVES));
+//    }
+
+    @Override
+    public void onCameraMoveStarted(int i) {
+        Log.d("italo italo", "" + i);
+    }
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         Log.d(TAG, "onMapReady");
@@ -114,6 +136,7 @@ public class GoogleMapsController implements GoogleMap.OnMapClickListener, Googl
         googleMap.setOnMyLocationButtonClickListener(this);
         googleMap.setOnMapClickListener(this);
         googleMap.setOnMapLongClickListener(this);
+        googleMap.setOnCameraMoveStartedListener(this);
 
         enableMyLocation();
     }

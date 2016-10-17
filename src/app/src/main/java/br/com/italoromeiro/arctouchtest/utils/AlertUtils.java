@@ -10,15 +10,11 @@ import android.support.v7.app.AlertDialog;
 public class AlertUtils {
     private static final String TAG = AlertUtils.class.getSimpleName();
 
-    public static AlertDialog dialog;
-
-    public static void alert(Context context, int titleId, int messageId) {
-        alert(context, titleId, messageId, 0, null, 0, null, 0);
+    public static AlertDialog alert(Context context, int titleId, int messageId) {
+        return alert(context, titleId, messageId, 0, null, 0, null, 0);
     }
 
-    public static synchronized void alert(Context context, int titleId, int messageId, int okButtonId, DialogInterface.OnClickListener okListener, int noButtonId, DialogInterface.OnClickListener noListener, int icon) {
-        dismissDialog();
-
+    public static synchronized AlertDialog alert(Context context, int titleId, int messageId, int okButtonId, DialogInterface.OnClickListener okListener, int noButtonId, DialogInterface.OnClickListener noListener, int icon) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
         if (okButtonId > 0 && okListener != null) {
@@ -32,14 +28,6 @@ public class AlertUtils {
         builder.setTitle(context.getString(titleId))
                 .setMessage(context.getString(messageId));
 
-        dialog = builder.create();
-        dialog.show();
-    }
-
-    public static synchronized void dismissDialog() {
-        if (dialog != null) {
-            dialog.dismiss();
-            dialog = null;
-        }
+        return builder.create();
     }
 }

@@ -10,6 +10,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -42,6 +43,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Serializ
     TabLayout mTabs;
 
     protected Toolbar mToolbar;
+    private AlertDialog mAlertDialog;
     private ProgressDialog mProgressDialog;
     private FrameLayout mContent;
     private ActionBarDrawerToggle mToggle;
@@ -116,6 +118,14 @@ public abstract class BaseActivity extends AppCompatActivity implements Serializ
         }
     }
 
+    @UiThread
+    public void dismissAlertDialog() {
+        if (mAlertDialog != null && mAlertDialog.isShowing()) {
+            mAlertDialog.dismiss();
+            mAlertDialog = null;
+        }
+    }
+
     @Override
     public void onBackPressed() {
         if (mDrawer.isDrawerOpen(GravityCompat.START)) {
@@ -138,7 +148,8 @@ public abstract class BaseActivity extends AppCompatActivity implements Serializ
 
     @UiThread
     public void showGeneralErrorDialog() {
-        AlertUtils.alert(this, R.string.dialog_title_default, R.string.dialog_message_no_info);
+        mAlertDialog = AlertUtils.alert(this, R.string.dialog_title_default, R.string.dialog_message_no_info);
+        mAlertDialog.show();
     }
 
     @Override
@@ -153,7 +164,8 @@ public abstract class BaseActivity extends AppCompatActivity implements Serializ
         Log.d(TAG, "onDestroy");
 
         dismissDialogProgress();
-        AlertUtils.dismissDialog();
+        dismissAlertDialog();
+
         EventBus.getDefault().unregister(this);
         mDrawer.removeDrawerListener(mToggle);
 

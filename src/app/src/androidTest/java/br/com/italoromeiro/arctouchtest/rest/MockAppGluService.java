@@ -1,6 +1,7 @@
 package br.com.italoromeiro.arctouchtest.rest;
 
 import android.content.Context;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.core.deps.guava.io.CharStreams;
 
 import com.google.gson.Gson;
@@ -26,8 +27,8 @@ public class MockAppGluService implements AppGluService {
     private static Context mContextApi;
     private final BehaviorDelegate<AppGluService> mDelegate;
 
-    public MockAppGluService(Context contextApi, BehaviorDelegate<AppGluService> delegate) {
-        mContextApi = contextApi;
+    public MockAppGluService(BehaviorDelegate<AppGluService> delegate) {
+        mContextApi = InstrumentationRegistry.getContext();
         mDelegate = delegate;
     }
 

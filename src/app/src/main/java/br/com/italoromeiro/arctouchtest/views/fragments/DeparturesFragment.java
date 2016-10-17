@@ -87,9 +87,12 @@ public class DeparturesFragment extends BaseFragment {
     }
 
     public void setDepartures(List<Departure> departures) {
-        Log.e("italo italo", "setDepartures");
         mDepartures = departures;
         if (mWeekdayAdapter == null || mSaturdayAdapter == null || mSundayAdapter == null) {
+            return;
+        }
+
+        if (mWeekdayRv == null || mSaturdayRv == null || mSundayRv == null) {
             return;
         }
 
@@ -140,7 +143,6 @@ public class DeparturesFragment extends BaseFragment {
     @Override
     public void onResume() {
         Log.d(TAG, "onResume");
-        Log.e("italo italo", "onResume");
         super.onResume();
         if (mDepartures == null) {
             EventBus.getDefault().post(new Events.DeparturesViewReadyEvent());

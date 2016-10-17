@@ -34,7 +34,7 @@ import br.com.italoromeiro.arctouchtest.R;
 import br.com.italoromeiro.arctouchtest.core.GeneralConstants;
 import br.com.italoromeiro.arctouchtest.core.adapters.RoutesAdapter;
 import br.com.italoromeiro.arctouchtest.models.Route;
-import br.com.italoromeiro.arctouchtest.utils.FormatterUtil;
+import br.com.italoromeiro.arctouchtest.utils.FormatterUtils;
 import br.com.italoromeiro.arctouchtest.views.activities.ListActivity;
 import br.com.italoromeiro.arctouchtest.views.activities.MapActivity_;
 
@@ -136,7 +136,7 @@ public class ListFragment extends BaseFragment {
         } else {
             mTextInputLayout.setErrorEnabled(false);
             addProgressView();
-            mActivity.findByStopName(FormatterUtil.cleanString(mEtSearch.getText().toString()));
+            mActivity.findByStopName(FormatterUtils.cleanString(mEtSearch.getText().toString()));
         }
     }
 

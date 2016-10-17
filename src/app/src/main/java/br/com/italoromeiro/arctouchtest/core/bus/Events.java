@@ -45,7 +45,12 @@ public class Events {
             /**
              * That state represents a click on my location button provided by google maps
              */
-            MY_LOCATION_CLICK
+            MY_LOCATION_CLICK,
+
+            /**
+             * THat state is called every time the map moves
+             */
+            CAMERA_MOVES
         }
 
         /**

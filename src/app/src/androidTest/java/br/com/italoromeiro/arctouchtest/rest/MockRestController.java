@@ -42,7 +42,7 @@ public class MockRestController extends RestController {
                 .build();
 
         BehaviorDelegate<AppGluService> delegate = mMockRetrofit.create(AppGluService.class);
-        mMockAppGluService = new MockAppGluService(mActivity, delegate);
+        mMockAppGluService = new MockAppGluService(delegate);
     }
 
     @Override

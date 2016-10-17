@@ -24,7 +24,6 @@ import org.androidannotations.annotations.InstanceState;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.res.DimensionRes;
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
@@ -76,7 +75,6 @@ public class MapActivity extends BaseActivity {
 
     private BottomSheetBehavior mBottomSheetBehavior;
     private boolean mLocationPermissionDenied = false;
-//    private Geocoder geocoder;
 
     @AfterViews
     public void mapActivityAfterViews() {
@@ -90,23 +88,11 @@ public class MapActivity extends BaseActivity {
         mGoogleMapsController.applyMap(mMapFragment);
         mGoogleApiClientController.setNumberOfReadings(READINGS_PER_DISTRICT);
 
-        adjustFAB();
+        changeGPSIcon(R.drawable.ic_gps_fixed_black_48dp);
 
         if (mSelectedStreet != null) {
             mAddressResult.setText(mSelectedStreet);
         }
-    }
-
-    private void adjustFAB() {
-        mFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d(TAG, "FAB onClick");
-                EventBus.getDefault().post(new Events.MapAction(Events.MapAction.ActionType.MY_LOCATION_CLICK, null));
-                changeGPSIcon(R.drawable.ic_gps_fixed_black_48dp);
-            }
-        });
-        changeGPSIcon(R.drawable.ic_gps_fixed_black_48dp);
     }
 
     @UiThread
@@ -127,6 +113,11 @@ public class MapActivity extends BaseActivity {
         }
     }
 
+    @Click(R.id.fab)
+    public void startAutomaticMapUpdate() {
+        handleMapAction(new Events.MapAction(Events.MapAction.ActionType.MY_LOCATION_CLICK, null));
+    }
+
     @Subscribe
     public void handleMapAction(Events.MapAction action) {
         Log.d(TAG, "handleMapAction");
@@ -134,14 +125,16 @@ public class MapActivity extends BaseActivity {
         switch (action.getActionType()) {
             case CLICK:
             case LONG_CLICK:
-                changeGPSIcon(R.drawable.ic_gps_not_fixed_black_48dp);
-                mGoogleApiClientController.stopLocationUpdates();
                 mGoogleMapsController.goToThatPoint(action.getLatLng());
                 getAddress(action.getLatLng().longitude, action.getLatLng().latitude);
+            case CAMERA_MOVES:
+                changeGPSIcon(R.drawable.ic_gps_not_fixed_black_48dp);
+                mGoogleApiClientController.stopLocationUpdates();
                 break;
             case MY_LOCATION_CLICK:
                 changeGPSIcon(R.drawable.ic_gps_fixed_black_48dp);
                 mGoogleApiClientController.startLocationUpdates();
+                mGoogleMapsController.fakeMyLocationButtonClick();
                 break;
         }
     }
@@ -199,7 +192,6 @@ public class MapActivity extends BaseActivity {
             @Override
             public void onSlide(@NonNull View bottomSheet, float slideOffset) {
                 // React to dragging events
-//                Log.d(TAG, "onSlide: " + slideOffset);
             }
 
             @Override
@@ -223,7 +215,6 @@ public class MapActivity extends BaseActivity {
                         break;
                 }
                 Log.d(TAG, "onStateChanged: " + stateName);
-                // React to state change
             }
         };
     }
