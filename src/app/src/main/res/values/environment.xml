@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ArcTouch Dev</string>
+    <string name="api_url">https://api.appglu.com/v1/</string>
+
+    <string name="user">WKD4N7YMA1uiM8V</string>
+    <string name="password">DtdTtzMLQlA0hk2C1Yi5pLyVIlAQ68</string>
+</resources>

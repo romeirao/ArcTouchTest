@@ -1,0 +1,53 @@
+<resources>
+    <!-- General msgs -->
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="button_label_search">Search</string>
+    <string name="button_label_ok">OK</string>
+
+    <string name="textview_label_map">Select a street</string>
+    <string name="textview_label_map_street_selected">Selected street:</string>
+    <string name="textview_label_map_street_selected_none">None</string>
+    <string name="textview_label_route">Route</string>
+    <string name="textview_label_route_empty">No routes to display</string>
+    <string name="textview_label_route_searching" translatable="false">...</string>
+    <string name="textview_label_stops">Stops</string>
+    <string name="textview_label_stops_empty">No stops to display</string>
+    <string name="textview_label_departures">Departures</string>
+    <string name="textview_label_departures_empty">No departures to display</string>
+    <string name="textview_label_departures_weekday">WEEKDAY</string>
+    <string name="textview_label_departures_saturday">SATURDAY</string>
+    <string name="textview_label_departures_sunday">SUNDAY</string>
+    <string name="textview_label_schedules_empty">There is no schedule to show</string>
+
+    <plurals name="textview_label_amount">
+        <item quantity="one">%d route found</item>
+        <item quantity="other">%d routes found</item>
+    </plurals>
+
+    <string name="fetching_route_data">Waiting for info...</string>
+    <string name="fragment_tag_stop" translatable="false">stop_fragment</string>
+    <string name="fragment_tag_departure" translatable="false">departure_fragment</string>
+
+    <!-- Hint msgs -->
+    <string name="hint_search">Search by street names...</string>
+
+    <!-- Permission msgs -->
+    <string name="location_permission_denied">The permission for location was denied</string>
+    <string name="permission_required_toast">It is necessary permission for location</string>
+    <string name="permission_rationale_location">It is necessary permission for location</string>
+
+    <!-- Error msgs -->
+    <string name="error_empty_string">You must fill in this field</string>
+
+    <!-- Dialog msgs -->
+    <string name="dialog_loading_waiting">Wait for a while...</string>
+    <string name="dialog_title_default">Hey there</string>
+    <string name="dialog_message_no_info">"We couldn\'t get info at this time. Please try again."</string>
+
+    <!-- Dummy msgs -->
+    <string name="dummy_route_short_name" translatable="false">185</string>
+    <string name="dummy_route_long_name" translatable="false">AGRONÔMICA VIA MAURO RAMOS</string>
+    <string name="dummy_stop_name" translatable="false">RUA ANTÔNIO PEREIRA OLIVEIRA NETO</string>
+    <string name="dummy_departure_calendar" translatable="false">WEEKDAY</string>
+</resources>
